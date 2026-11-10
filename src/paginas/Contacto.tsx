@@ -34,13 +34,13 @@ export function Contacto() {
   return (
     <>
       {/* "Hablemos" gigante con un campo visto desde arriba de fondo */}
-      <section className="oscuro grid min-h-svh items-center overflow-hidden pt-(--nav)" aria-labelledby="contacto-titulo">
+      <section className="oscuro grid min-h-svh content-start overflow-hidden pt-(--arranque) pb-[8vh]" aria-labelledby="contacto-titulo">
         <Ruido id="ruido-contacto" />
         <div className="pointer-events-none absolute inset-0 -z-10">
           <FondoLotes />
         </div>
 
-        <div className="ancho grid justify-items-center py-20 text-center" data-reveal>
+        <div className="ancho grid justify-items-center text-center" data-reveal>
           <p className="etiqueta">Contacto</p>
           <h1 id="contacto-titulo" className="mt-5.5 text-[clamp(64px,10vw,142px)] leading-[.92] font-normal tracking-[-.07em]">Hablemos.</h1>
           <p className="mt-6.5 max-w-136 text-grande text-white/78">Para conocer más sobre nuestros productos y servicios, escribinos.</p>

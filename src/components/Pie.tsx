@@ -17,6 +17,13 @@ export function Pie() {
   return (
     <footer className="oscuro overflow-hidden pt-[clamp(48px,5vw,72px)]">
       <Ruido id="ruido-pie" />
+      {/* Raíces de los girasoles de la sección de contacto, en crema, arrancando arriba a la derecha.
+          Mismo ancho que los girasoles (391 px en celu, 680 en compu): así empalman con los tallos. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_top] [background-size:391px_auto] md:[background-size:680px_auto]"
+        style={{ backgroundImage: `url(${archivo("img/raices-pie.svg")})` }}
+      />
       <div className="ancho">
         <div className="grid gap-x-10 gap-y-9 border-b border-white/18 pb-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr]">
           <div>

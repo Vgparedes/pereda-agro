@@ -50,6 +50,8 @@
   :root {
     --nav: 76px;
     --gutter: clamp(20px, 5.5vw, 88px);
+    /* Altura a la que arranca el texto del primer panel de TODAS las páginas (así no "salta" al cambiar de página) */
+    --arranque: calc(var(--nav) + clamp(72px, 13vh, 130px));
     scroll-behavior: smooth;
     /* Sin margen arriba al saltar a una sección: al bajar, el header se esconde y dejaba
        una franja de la sección anterior. Al subir, el header solo tapa el aire de arriba. */

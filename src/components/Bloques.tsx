@@ -12,7 +12,7 @@ export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pant
   return (
     <section
       className={`oscuro overflow-hidden ${pantallaCompleta
-        ? "flex min-h-svh flex-col justify-center pt-[calc(var(--nav)+4vh)] pb-[8vh]"
+        ? "flex min-h-svh flex-col pt-(--arranque) pb-[8vh]"
         : "pt-[calc(var(--nav)+clamp(64px,12vw,160px))] pb-[clamp(56px,8vw,112px)]"}`}
     >
       {foto && (
@@ -22,10 +22,13 @@ export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pant
         </>
       )}
       <Ruido id="ruido-cabecera" />
-      <div className="ancho grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
+      <div className="ancho grid items-start gap-12 lg:grid-cols-[1.2fr_1fr]">
         <div className="grid gap-6.5">
-          {migas && <p className="font-mono text-etiqueta tracking-widest text-white/78 uppercase">{migas}</p>}
-          <p className="etiqueta">{etiqueta}</p>
+          {/* Las migas van encima de la etiqueta sin empujarla: así la etiqueta queda a la misma altura en todas las páginas */}
+          <div className="relative flex">
+            {migas && <p className="absolute bottom-full mb-4 font-mono text-etiqueta tracking-widest text-white/78 uppercase">{migas}</p>}
+            <p className="etiqueta">{etiqueta}</p>
+          </div>
           <h1 className="max-w-[14ch] text-display">{titulo}</h1>
           <p className="max-w-160 text-grande text-white/78">{bajada}</p>
         </div>
@@ -38,7 +41,14 @@ export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pant
 /** Llamado al final de cada página. */
 export function Llamado({ titulo = "¿Querés trabajar con nosotros?", texto = "Contanos qué producto, calibre y volumen necesitás y te respondemos a la brevedad." }: { titulo?: string; texto?: string }) {
   return (
-    <section className="sec-pad" aria-labelledby="llamado-titulo">
+    <section className="sec-pad relative isolate overflow-hidden" aria-labelledby="llamado-titulo">
+      {/* Girasoles de costado en trazo fino. Ancho FIJO (391 px en celu, 680 en compu) y pegados abajo a la derecha:
+          el pie usa el mismo ancho para las raíces, así los tallos siguen debajo de la tierra sin cortarse. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_bottom] [background-size:391px_auto] md:[background-size:680px_auto]"
+        style={{ backgroundImage: `url(${archivo("img/girasoles-linea.svg")})` }}
+      />
       <div className="ancho flex flex-wrap items-end justify-between gap-8" data-reveal>
         <div className="grid gap-5">
           <p className="etiqueta">Contacto</p>

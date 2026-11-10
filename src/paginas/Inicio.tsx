@@ -6,7 +6,7 @@ export function Inicio() {
   return (
     <>
       {/* Hero: girasoles a pantalla completa con verde fuerte del lado del texto */}
-      <section className="oscuro flex min-h-svh flex-col justify-center overflow-hidden">
+      <section className="oscuro flex min-h-svh flex-col overflow-hidden">
         <img
           src={archivo("img/girasoles-1600.webp")} width={1920} height={776} alt="Campo de girasoles en flor" fetchPriority="high"
           // Versiones livianas: el celu baja la de 640 (40 KB); va tapada por el verde, no se nota.
@@ -20,7 +20,7 @@ export function Inicio() {
           className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(6_38_26/.7),rgb(6_38_26/.86)_45%,var(--color-verde-noche))] md:bg-[linear-gradient(180deg,transparent_55%,var(--color-verde-noche)),linear-gradient(90deg,rgb(6_38_26/.94),rgb(6_38_26/.82)_42%,rgb(6_38_26/.3))]"
         />
         <Ruido id="ruido-hero" />
-        <div className="ancho grid gap-6 pt-[calc(var(--nav)+4vh)] pb-[8vh]">
+        <div className="ancho grid gap-6 pt-(--arranque) pb-[8vh]">
           <p className="etiqueta text-sm md:text-base">{t.etiqueta}</p>
           <h1 className="max-w-[12ch] text-[clamp(3rem,7.4vw,7rem)]/[.94] tracking-[-.06em]">
             {t.titulo} <span className="resaltada text-dorado">{t.tituloAcento}</span>
@@ -33,7 +33,14 @@ export function Inicio() {
         </div>
       </section>
 
-      <section className="sec-pad" aria-labelledby="quienes-titulo">
+      <section className="sec-pad relative isolate overflow-hidden" aria-labelledby="quienes-titulo">
+        {/* Espiral de girasol (cómo se acomodan las semillas en la flor). Desde 1280 px asoma grande por la derecha;
+            más chico, es un cuarto de espiral en la esquina de abajo, al lado del botón, para no quedar detrás del texto. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_-130px_bottom_-130px] [background-size:260px] md:[background-position:right_-200px_bottom_-200px] md:[background-size:400px] xl:[background-position:right_-170px_center] xl:[background-size:540px]"
+          style={{ backgroundImage: `url(${archivo("img/espiral-girasol.svg")})` }}
+        />
         <div className="ancho grid items-center gap-[clamp(32px,6vw,96px)] md:grid-cols-2">
           <Encabezado etiqueta={t.quienes.etiqueta} titulo={t.quienes.titulo} id="quienes-titulo" />
           <div className="grid max-w-[62ch] gap-6" data-reveal>

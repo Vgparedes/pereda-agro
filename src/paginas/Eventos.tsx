@@ -34,15 +34,16 @@ export function Eventos() {
               <li key={it.nombre} data-reveal>
                 <a
                   href={it.url} target="_blank" rel="noopener"
-                  className="group grid h-full content-start gap-3 rounded-lg border border-tinta/15 bg-crema p-5 transition-colors hover:border-verde"
+                  className="group flex h-full flex-col gap-3 rounded-lg border border-tinta/15 bg-crema p-5 transition-colors hover:border-verde"
                 >
-                  {it.logo && <img src={archivo(`img/instituciones/${it.logo}`)} width={it.logoTam?.[0]} height={it.logoTam?.[1]} alt="" loading="lazy" className="h-12 w-auto justify-self-start object-contain grayscale group-hover:grayscale-0" />}
+                  {it.logo && <img src={archivo(`img/instituciones/${it.logo}`)} width={it.logoTam?.[0]} height={it.logoTam?.[1]} alt="" loading="lazy" className="h-12 w-auto self-start object-contain grayscale group-hover:grayscale-0" />}
                   <div>
                     <h3 className="text-lg leading-tight font-medium">{it.nombre}</h3>
                     <p className="mt-1 font-mono text-etiqueta tracking-widest text-tinta-suave uppercase">{it.lugar}</p>
                   </div>
                   <p className="text-[.95rem] text-tinta-suave">{it.texto}</p>
-                  <span className="mt-auto inline-flex items-center gap-2 font-mono text-sm text-verde underline underline-offset-4">
+                  {/* mt-auto: el link va siempre al pie de la tarjeta, así quedan todos alineados aunque el texto tenga distinto largo */}
+                  <span className="mt-auto inline-flex items-center gap-2 pt-1 font-mono text-sm text-verde underline underline-offset-4">
                     {it.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "")} <Flecha diagonal />
                     <span className="sr-only">(se abre en otra pestaña)</span>
                   </span>
