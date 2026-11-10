@@ -32,7 +32,7 @@ export default function App({ ruta }: { ruta: Ruta }) {
       <main id="main">
         <Pagina ruta={ruta} />
       </main>
-      <Pie />
+      <Pie raices={ruta !== "contacto"} />
     </>
   );
 }
