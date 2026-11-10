@@ -22,8 +22,8 @@ export function Header({ ruta }: { ruta: Ruta }) {
       className={`sticky top-0 z-50 -mb-(--nav) flex h-(--nav) items-center justify-between gap-6 bg-verde-noche/80 px-(--gutter) text-white backdrop-blur-md transition-transform duration-300 ease-krsp ${oculto && !abierto ? "-translate-y-[105%]" : ""}`}
     >
       <a href={enlace("")} aria-label="Pereda Agro, ir al inicio" className="flex min-h-11 items-center gap-3">
-        <img src={archivo("img/logos/logo-pereda.png")} width={184} height={128} alt="" className="w-14 min-[1101px]:w-16" />
-        <span className="font-mono text-etiqueta tracking-[.12em] text-white/78 uppercase max-[480px]:hidden">Pereda Agro S.A.</span>
+        <img src={archivo("img/logos/logo-pereda.png")} width={184} height={128} alt="" className="w-16 min-[1101px]:w-20" />
+        <span className="font-mono text-sm tracking-[.12em] text-white/85 uppercase max-[480px]:hidden min-[1101px]:text-[.95rem]">Pereda Agro S.A.</span>
       </a>
 
       <button

@@ -47,6 +47,11 @@ export function Globo({
     let ultimoTam = 0;
     let visible = true;
     let desmontado = false;
+    // Gira recién cuando la persona hace algo (mueve el mouse, scrollea, toca o usa el teclado).
+    // Así la carga de la página queda liviana: dibujar el 3D cuadro por cuadro cuesta mucho en celus.
+    let interactuo = false;
+    const redibujos: number[] = [];
+    const eventos = ["pointermove", "scroll", "touchstart", "keydown"] as const;
 
     const animar = () => {
       frame = 0;
@@ -56,8 +61,14 @@ export function Globo({
       frame = requestAnimationFrame(animar);
     };
     const arrancar = () => {
-      if (!frame && !quieto && visible && globo) frame = requestAnimationFrame(animar);
+      if (!frame && !quieto && interactuo && visible && globo) frame = requestAnimationFrame(animar);
     };
+    const alInteractuar = () => {
+      interactuo = true;
+      eventos.forEach((ev) => removeEventListener(ev, alInteractuar));
+      arrancar();
+    };
+    eventos.forEach((ev) => addEventListener(ev, alInteractuar, { passive: true }));
 
     const dimensionar = () => {
       const tam = Math.round(canvas.getBoundingClientRect().width);
@@ -66,7 +77,8 @@ export function Globo({
       frame = 0;
       globo?.destroy();
       try {
-        const dpr = Math.min(devicePixelRatio || 1, 2);
+        const chico = tam < 480; // en celu: menos puntos y menos resolución, casi no se nota
+        const dpr = Math.min(devicePixelRatio || 1, chico ? 1.5 : 2);
         globo = fabrica(canvas, {
           width: Math.round(tam * dpr),
           height: Math.round(tam * dpr),
@@ -76,7 +88,7 @@ export function Globo({
           dark: 0.9,
           scale: 1.02,
           diffuse: 1.25,
-          mapSamples: 24000,
+          mapSamples: chico ? 14000 : 24000,
           mapBrightness: 7,
           baseColor: colorBase,
           markerColor: colorMarcador,
@@ -91,6 +103,9 @@ export function Globo({
         });
         ultimoTam = tam;
         caja.classList.remove("globo--sin-webgl");
+        // El mapa de puntos carga un instante después de crear el globo: unos pocos
+        // redibujos quietos al principio para que se vea completo aunque todavía no gire.
+        [150, 500, 1200, 2500].forEach((ms) => redibujos.push(window.setTimeout(() => { if (!frame) globo?.update({ phi }); }, ms)));
         arrancar();
       } catch {
         globo = undefined;
@@ -115,6 +130,8 @@ export function Globo({
       desmontado = true;
       obsTam.disconnect();
       obsVista.disconnect();
+      eventos.forEach((ev) => removeEventListener(ev, alInteractuar));
+      redibujos.forEach(clearTimeout);
       if (frame) cancelAnimationFrame(frame);
       globo?.destroy();
     };

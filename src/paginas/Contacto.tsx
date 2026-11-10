@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { contacto } from "../contenido";
 import { Encabezado, Flecha, Ruido } from "../components/Detalles";
+import { FondoLotes } from "../components/FondoLotes";
 
 const campo = "min-h-12.5 w-full rounded-lg border border-white/30 bg-white/6 px-3.5 py-3 text-base text-white focus:border-dorado focus:outline-none";
 
@@ -30,20 +31,13 @@ export function Contacto() {
     setAbierto(false);
   };
 
-  const orbita = "absolute top-1/2 left-1/2 aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/15";
-
   return (
     <>
-      {/* "Hablemos" gigante con órbitas girando de fondo */}
-      <section className="oscuro grid min-h-[min(900px,100svh)] items-center overflow-hidden pt-(--nav)" aria-labelledby="contacto-titulo">
+      {/* "Hablemos" gigante con un campo visto desde arriba de fondo */}
+      <section className="oscuro grid min-h-svh items-center overflow-hidden pt-(--nav)" aria-labelledby="contacto-titulo">
         <Ruido id="ruido-contacto" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-          <span className={`${orbita} w-[max(124vw,900px)] animate-[orbita-gira_120s_linear_infinite]`}>
-            <span className="absolute top-[20%] left-[80%] size-2.5 rounded-full bg-dorado" />
-          </span>
-          <span className={`${orbita} w-[max(78vw,560px)] animate-[orbita-gira_90s_linear_infinite_reverse]`}>
-            <span className="absolute top-[12%] left-[18%] size-2 rounded-full bg-white" />
-          </span>
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <FondoLotes />
         </div>
 
         <div className="ancho grid justify-items-center py-20 text-center" data-reveal>

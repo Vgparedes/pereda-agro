@@ -4,14 +4,20 @@ import type { Enlace, Producto } from "../contenido";
 import { archivo, enlace, Flecha, Ruido } from "./Detalles";
 
 /** Primera pantalla de las páginas internas: fondo verde noche, foto apagada opcional y título gigante. */
-export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children }: {
+export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pantallaCompleta = true }: {
   etiqueta: string; titulo: string; bajada: string; foto?: string; migas?: ReactNode; children?: ReactNode;
+  /** true (por defecto): ocupa toda la primera pantalla y centra el texto, como el hero del inicio */
+  pantallaCompleta?: boolean;
 }) {
   return (
-    <section className="oscuro overflow-hidden pt-[calc(var(--nav)+clamp(64px,12vw,160px))] pb-[clamp(56px,8vw,112px)]">
+    <section
+      className={`oscuro overflow-hidden ${pantallaCompleta
+        ? "flex min-h-svh flex-col justify-center pt-[calc(var(--nav)+4vh)] pb-[8vh]"
+        : "pt-[calc(var(--nav)+clamp(64px,12vw,160px))] pb-[clamp(56px,8vw,112px)]"}`}
+    >
       {foto && (
         <>
-          <img src={archivo(`img/${foto}`)} alt="" fetchPriority="high" className="absolute inset-0 -z-20 size-full object-cover opacity-30" />
+          <img src={archivo(`img/${foto}`)} width={1080} height={700} alt="" fetchPriority="high" className="absolute inset-0 -z-20 size-full object-cover opacity-30" />
           <div className="absolute inset-0 -z-10 bg-linear-to-r from-verde-noche from-20% to-verde-noche/55" aria-hidden="true" />
         </>
       )}
@@ -51,10 +57,10 @@ export function TarjetaProducto({ p }: { p: Producto }) {
     <a
       href={enlace(p.ruta)}
       data-reveal
-      className="group relative isolate flex min-h-[clamp(380px,42vw,560px)] flex-col justify-end gap-3 overflow-hidden rounded-lg bg-verde-noche p-[clamp(24px,3vw,40px)] text-white"
+      className="group relative isolate flex min-h-[clamp(380px,42vw,560px)] flex-col justify-end gap-3 overflow-hidden rounded-lg bg-verde-noche ring-1 ring-white/15 p-[clamp(24px,3vw,40px)] text-white"
     >
-      <img src={archivo(`img/${p.fotoTarjeta}`)} alt="" loading="lazy" decoding="async" className="absolute inset-0 -z-20 size-full object-cover transition-transform duration-700 ease-krsp group-hover:scale-105" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(6_38_26/.05)_10%,rgb(6_38_26/.72)_48%,rgb(6_38_26/.97)_100%)]" />
+      <img src={archivo(`img/${p.fotoTarjeta}`)} width={800} height={520} alt="" loading="lazy" decoding="async" className="absolute inset-0 -z-20 size-full object-cover transition-transform duration-700 ease-krsp group-hover:scale-105" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,transparent_28%,rgb(6_38_26/.55)_58%,rgb(6_38_26/.8)_100%)]" />
       <p className="etiqueta">{p.etiquetaCorta}</p>
       <h3 className="text-[clamp(1.9rem,3.4vw,3.2rem)] leading-none tracking-[-.05em]">{p.nombre}</h3>
       <p className="max-w-[34ch] text-white/78">{p.resumen}</p>
@@ -72,7 +78,7 @@ export function ListaEnlaces({ items }: { items: Enlace[] }) {
           <span className="font-mono text-etiqueta leading-[2.2] tracking-widest text-verde">{String(i + 1).padStart(2, "0")}</span>
           <div className="flex items-start gap-4">
             {it.logo && (
-              <img src={archivo(`img/instituciones/${it.logo}`)} alt="" loading="lazy" className="size-14 shrink-0 rounded-md bg-white object-contain p-1 ring-1 ring-tinta/10" />
+              <img src={archivo(`img/instituciones/${it.logo}`)} width={it.logoTam?.[0]} height={it.logoTam?.[1]} alt="" loading="lazy" className="size-14 shrink-0 rounded-md bg-white object-contain p-1 ring-1 ring-tinta/10" />
             )}
             <div>
               <h3 className="text-sub">{it.nombre}</h3>
@@ -97,14 +103,14 @@ export function CintaLogos({ items }: { items: Enlace[] }) {
     <ul aria-hidden={copia || undefined} className="flex flex-none items-center gap-[clamp(38px,6vw,84px)] pr-[clamp(38px,6vw,84px)]">
       {items.filter((i) => i.logo).map((i) => (
         <li key={i.nombre}>
-          <img src={archivo(`img/instituciones/${i.logo}`)} alt={copia ? "" : i.nombre} loading="lazy" className="h-[clamp(40px,4vw,56px)] w-auto opacity-75 mix-blend-multiply grayscale" />
+          <img src={archivo(`img/instituciones/${i.logo}`)} width={i.logoTam?.[0]} height={i.logoTam?.[1]} alt={copia ? "" : i.nombre} loading="lazy" className="h-[clamp(40px,4vw,56px)] w-auto opacity-75 grayscale" />
         </li>
       ))}
     </ul>
   );
   return (
     <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_10%,#000_90%,transparent)]">
-      <div className="flex w-max animate-[cinta_60s_linear_infinite] hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-[cinta_60s_linear_infinite]">
         {lista(false)}
         {lista(true)}
       </div>

@@ -6,7 +6,7 @@ import { Contacto } from "./paginas/Contacto";
 import { Empresa } from "./paginas/Empresa";
 import { Exportacion } from "./paginas/Exportacion";
 import { Inicio } from "./paginas/Inicio";
-import { Eventos, Galeria, Links } from "./paginas/Otras";
+import { Eventos } from "./paginas/Eventos";
 import { Producto } from "./paginas/Producto";
 
 /** Cada página es una carpeta propia al publicar (dist/empresa/index.html, etc.):
@@ -18,8 +18,6 @@ function Pagina({ ruta }: { ruta: Ruta }) {
     case "pisingallo": return <Producto p={productos.find((p) => p.ruta === ruta)!} />;
     case "exportacion": return <Exportacion />;
     case "eventos": return <Eventos />;
-    case "galeria": return <Galeria />;
-    case "links": return <Links />;
     case "contacto": return <Contacto />;
     default: return <Inicio />;
   }

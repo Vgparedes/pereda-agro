@@ -31,28 +31,28 @@ export function Ruido({ id }: { id: string }) {
 }
 
 /** Encabezado de sección: etiqueta + título (+ bajada opcional). */
-export function Encabezado({ etiqueta, titulo, id, bajada, className = "" }: { etiqueta: string; titulo: ReactNode; id: string; bajada?: string; className?: string }) {
+export function Encabezado({ etiqueta, titulo, id, bajada, className = "", tituloClase = "text-titulo" }: { etiqueta: string; titulo: ReactNode; id: string; bajada?: string; className?: string; tituloClase?: string }) {
   return (
     <div className={`grid gap-5 ${className}`} data-reveal>
       <p className="etiqueta">{etiqueta}</p>
-      <h2 id={id} className="text-titulo">{titulo}</h2>
+      <h2 id={id} className={tituloClase}>{titulo}</h2>
       {bajada && <p className="max-w-160 text-grande text-tinta-suave in-[.oscuro]:text-white/78">{bajada}</p>}
     </div>
   );
 }
 
-/** Lista numerada 01, 02... con líneas finas. */
-export function Numerada({ items }: { items: { titulo: string; texto: string }[] }) {
+/** Lista numerada 01, 02... con líneas finas. "compacta" achica el alto de cada fila. */
+export function Numerada({ items, compacta = false }: { items: { titulo: string; texto: string }[]; compacta?: boolean }) {
   return (
     <ol className="border-t border-tinta/15 in-[.oscuro]:border-white/18">
       {items.map((it, i) => (
         <li
           key={it.titulo}
           data-reveal
-          className="grid gap-2.5 border-b border-tinta/15 py-[clamp(28px,3.4vw,44px)] md:grid-cols-[90px_1fr_1.4fr] md:gap-6 in-[.oscuro]:border-white/18"
+          className={`grid gap-2.5 border-b border-tinta/15 md:grid-cols-[90px_1fr_1.4fr] md:gap-6 in-[.oscuro]:border-white/18 ${compacta ? "py-[clamp(18px,2.2vw,28px)]" : "py-[clamp(28px,3.4vw,44px)]"}`}
         >
           <span className="font-mono text-etiqueta leading-[2.2] tracking-widest text-verde in-[.oscuro]:text-dorado">{String(i + 1).padStart(2, "0")}</span>
-          <h3 className="text-sub">{it.titulo}</h3>
+          <h3 className={compacta ? "text-[clamp(1.15rem,1.4vw,1.4rem)] leading-tight" : "text-sub"}>{it.titulo}</h3>
           <p className="max-w-[62ch] text-tinta-suave in-[.oscuro]:text-white/78">{it.texto}</p>
         </li>
       ))}
