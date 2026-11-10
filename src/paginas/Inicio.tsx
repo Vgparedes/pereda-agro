@@ -38,7 +38,7 @@ export function Inicio() {
             más chico, es un cuarto de espiral en la esquina de abajo, al lado del botón, para no quedar detrás del texto. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_-130px_bottom_-130px] [background-size:260px] md:[background-position:right_-200px_bottom_-200px] md:[background-size:400px] xl:[background-position:right_-170px_center] xl:[background-size:540px]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_-130px_bottom_-130px] [background-size:260px] md:[background-position:right_-200px_bottom_-200px] md:[background-size:400px] xl:[background-position:right_-230px_center] xl:[background-size:600px]"
           style={{ backgroundImage: `url(${archivo("img/espiral-girasol.svg")})` }}
         />
         <div className="ancho grid items-center gap-[clamp(32px,6vw,96px)] md:grid-cols-2">

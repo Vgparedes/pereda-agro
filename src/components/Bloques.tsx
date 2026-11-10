@@ -49,13 +49,15 @@ export function Llamado({ titulo = "¿Querés trabajar con nosotros?", texto = "
         className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_bottom] [background-size:391px_auto] md:[background-size:680px_auto]"
         style={{ backgroundImage: `url(${archivo("img/girasoles-linea.svg")})` }}
       />
-      <div className="ancho flex flex-wrap items-end justify-between gap-8" data-reveal>
-        <div className="grid gap-5">
+      {/* Todo el texto y el botón a la izquierda; el lado derecho queda libre para los girasoles.
+          En celu deja abajo el espacio de los girasoles para que no queden detrás del botón. */}
+      <div className="ancho pb-[200px] md:pb-0" data-reveal>
+        <div className="grid max-w-160 justify-items-start gap-5">
           <p className="etiqueta">Contacto</p>
           <h2 id="llamado-titulo" className="max-w-[14ch] text-titulo">{titulo}</h2>
-          <p className="max-w-160 text-grande text-tinta-suave">{texto}</p>
+          <p className="text-grande text-tinta-suave">{texto}</p>
+          <a className="boton mt-3" href={enlace("contacto")}>Escribinos <Flecha /></a>
         </div>
-        <a className="boton" href={enlace("contacto")}>Escribinos <Flecha /></a>
       </div>
     </section>
   );
