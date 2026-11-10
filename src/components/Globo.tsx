@@ -7,6 +7,37 @@ import type { Arc, Marker } from "cobe";
  *  - Se frena cuando no está en pantalla y con "reducir movimiento".
  *  - Si el navegador no tiene WebGL queda un círculo con brillo. */
 type Color = [number, number, number];
+type LatLon = [number, number];
+
+/* La librería dibuja cada arco como una sola curva entre las dos puntas. Si están muy lejos
+   (Argentina → Asia), esa curva corta por adentro del globo y parece que lo atraviesa.
+   Por eso cada arco se parte en tramos cortos que van por el círculo máximo (la ruta más
+   corta sobre la esfera, como un avión). Con tramos de ~24° y esta altura, cada tramo
+   queda tangente al siguiente: la línea se ve continua, pegada a la curvatura del globo. */
+const GRADOS_TRAMO = 24;
+// Cuentas (radio del globo 0,8 en la librería): las puntas de cada tramo quedan a 0,8 + ELEVACION
+// y el punto de control a 0,8 + ELEVACION + ALTURA_TRAMO. Para que los tramos empalmen tangentes,
+// el control tiene que caer donde se cruzan las tangentes: (0,8 + ELEVACION) / cos(12°) ≈ 0,838.
+const ELEVACION = 0.02;
+const ALTURA_TRAMO = 0.018;
+
+const aVector = ([lat, lon]: LatLon) => {
+  const la = (lat * Math.PI) / 180, lo = (lon * Math.PI) / 180;
+  return [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)];
+};
+const aLatLon = ([x, y, z]: number[]): LatLon => [(Math.asin(Math.max(-1, Math.min(1, z))) * 180) / Math.PI, (Math.atan2(y, x) * 180) / Math.PI];
+
+function enTramos(arco: Arc): Arc[] {
+  const a = aVector(arco.from), b = aVector(arco.to);
+  const angulo = Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2])));
+  const n = Math.max(1, Math.round((angulo * 180) / Math.PI / GRADOS_TRAMO));
+  const punto = (t: number) => {
+    if (angulo < 1e-6) return arco.from;
+    const s = Math.sin(angulo), k1 = Math.sin((1 - t) * angulo) / s, k2 = Math.sin(t * angulo) / s;
+    return aLatLon(a.map((v, i) => k1 * v + k2 * b[i]));
+  };
+  return Array.from({ length: n }, (_, i) => ({ ...arco, from: i ? punto(i / n) : arco.from, to: i === n - 1 ? arco.to : punto((i + 1) / n) }));
+}
 
 export function Globo({
   colorBase = [0.12, 0.42, 0.24],     // verde Pereda (los puntos del mapa)
@@ -40,6 +71,7 @@ export function Globo({
     }
 
     const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tramos = arcos.flatMap(enTramos);
     let globo: ReturnType<typeof createGlobe> | undefined;
     let fabrica: typeof createGlobe | undefined;
     let frame = 0;
@@ -96,10 +128,11 @@ export function Globo({
           opacity: 1,
           offset: [0, 0],
           markers: marcadores,
-          arcs: arcos,
+          arcs: tramos,
           arcColor: colorMarcador,
           arcWidth: 0.6,
-          arcHeight: 0.35,
+          arcHeight: ALTURA_TRAMO,
+          markerElevation: ELEVACION,
         });
         ultimoTam = tam;
         caja.classList.remove("globo--sin-webgl");

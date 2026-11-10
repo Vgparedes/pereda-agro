@@ -17,9 +17,11 @@ export function Header({ ruta }: { ruta: Ruta }) {
   }, [abierto]);
 
   return (
+    // Con el menú abierto se apaga el desenfoque: si no, el panel del menú (position: fixed)
+    // se mide contra el header en vez de contra la pantalla y queda cortado en 44 px.
     <header
       onFocusCapture={() => setOculto(false)}
-      className={`sticky top-0 z-50 -mb-(--nav) flex h-(--nav) items-center justify-between gap-6 bg-verde-noche/80 px-(--gutter) text-white backdrop-blur-md transition-transform duration-300 ease-krsp ${oculto && !abierto ? "-translate-y-[105%]" : ""}`}
+      className={`sticky top-0 z-50 -mb-(--nav) flex h-(--nav) items-center justify-between gap-6 bg-verde-noche/80 px-(--gutter) text-white backdrop-blur-md transition-transform duration-300 ease-krsp ${oculto && !abierto ? "-translate-y-[105%]" : ""} ${abierto ? "backdrop-blur-none bg-verde-noche" : ""}`}
     >
       <a href={enlace("")} aria-label="Pereda Agro, ir al inicio" className="flex min-h-11 items-center gap-3">
         <img src={archivo("img/logos/logo-pereda.png")} width={184} height={128} alt="" className="w-16 min-[1101px]:w-20" />
