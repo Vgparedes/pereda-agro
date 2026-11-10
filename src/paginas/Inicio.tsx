@@ -23,7 +23,7 @@ export function Inicio() {
         <div className="ancho grid gap-6 pt-[calc(var(--nav)+4vh)] pb-[8vh]">
           <p className="etiqueta text-sm md:text-base">{t.etiqueta}</p>
           <h1 className="max-w-[12ch] text-[clamp(3rem,7.4vw,7rem)]/[.94] tracking-[-.06em]">
-            {t.titulo} <span className="text-dorado">{t.tituloAcento}</span>
+            {t.titulo} <span className="resaltada text-dorado">{t.tituloAcento}</span>
           </h1>
           <p className="max-w-160 text-grande text-white/78">{t.bajada}</p>
           <div className="mt-2 flex flex-wrap gap-3">
@@ -38,7 +38,7 @@ export function Inicio() {
           <Encabezado etiqueta={t.quienes.etiqueta} titulo={t.quienes.titulo} id="quienes-titulo" />
           <div className="grid max-w-[62ch] gap-6" data-reveal>
             <blockquote className="border-l-3 border-verde pl-6">
-              <p className="text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.15] tracking-[-.04em] text-verde">{t.quienes.lema}</p>
+              <p className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.08] font-semibold tracking-[-.01em] text-verde italic">{t.quienes.lema}</p>
               <p className="mt-3 font-mono text-etiqueta tracking-[.12em] text-tinta-suave uppercase">{t.quienes.lemaPie}</p>
             </blockquote>
             <p className="text-tinta-suave">{t.quienes.texto}</p>
@@ -50,7 +50,7 @@ export function Inicio() {
       <section id="productos" className="oscuro sec-pad" aria-labelledby="productos-titulo">
         <Ruido id="ruido-productos" />
         <div className="ancho">
-          <Encabezado etiqueta="Productos" titulo="Dos productos, todo el proceso." id="productos-titulo" className="mb-[clamp(48px,6vw,88px)]" />
+          <Encabezado etiqueta="Productos" titulo={<>Dos productos, todo el <span className="resaltada text-dorado">proceso</span>.</>} id="productos-titulo" className="mb-[clamp(48px,6vw,88px)]" />
           <div className="grid gap-[clamp(16px,2vw,28px)] md:grid-cols-2">
             {productos.map((p) => <TarjetaProducto key={p.ruta} p={p} />)}
           </div>

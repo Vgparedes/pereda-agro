@@ -84,7 +84,9 @@ export const empresa = {
 };
 
 /* ---------- Productos ---------- */
-export type Spec = { nombre: string; valor?: string; chips?: string[]; nota?: string };
+/** Calibre dibujado a escala: diámetro en mm; "hasta" = fin del rango; "oMas" = ese tamaño o más grande. */
+export type CalibreEscala = { calibre: string; mm: number; hasta?: number; oMas?: boolean; texto: string };
+export type Spec = { nombre: string; valor?: string; chips?: string[]; nota?: string; escala?: CalibreEscala[] };
 export type Producto = {
   ruta: Ruta; nombre: string; resumen: string; etiquetaCorta: string; bajada: string;
   fotoCabecera: string; fotoTarjeta: string; bolsa: { src: string; w: number; h: number; alt: string };
@@ -106,8 +108,18 @@ export const productos: Producto[] = [
     specs: [
       { nombre: "Presentación", valor: "Inshell (con cáscara)" },
       { nombre: "Packaging", chips: ["5 kg", "10 kg", "20 kg", "50 lbs"] },
-      { nombre: "Calibres", chips: ["22/64 up · más de 8,73 mm", "20/64 · 7,94 mm", "16-18/64 · 6,35 mm"], nota: "El calibre es el diámetro del grano, medido en 64avos de pulgada." },
-      { nombre: "Equivalencia", valor: "22/64 in = 8,73 mm", nota: "0,34 pulgadas." },
+      {
+        // Sin chips: los granos dibujados ya muestran cada calibre con su medida
+        nombre: "Calibres",
+        nota: "El calibre es el ancho del grano, medido en 64avos de pulgada.",
+        // 1/64 de pulgada = 0,397 mm. 22/64 = 8,73 · 20/64 = 7,94 · 16/64 = 6,35 · 18/64 = 7,14
+        escala: [
+          { calibre: "22/64 up", mm: 8.73, oMas: true, texto: "8,73 mm o más" },
+          { calibre: "20/64", mm: 7.94, texto: "7,94 mm" },
+          { calibre: "16-18/64", mm: 6.35, hasta: 7.14, texto: "6,35 a 7,14 mm" },
+        ],
+      },
+      { nombre: "Equivalencia", nota: "22/64 de pulgada = 0,34 pulgadas = 8,73 mm." },
     ],
   },
   {

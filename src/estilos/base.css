@@ -10,6 +10,8 @@
    (antes venían de @fontsource y el navegador las descubría tarde: bajaba el Lighthouse). */
 @font-face { font-family: "Chivo"; src: url("/fonts/chivo-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Chivo"; src: url("/fonts/chivo-500.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+/* Serif itálica solo para resaltar una o dos palabras de un título: se parece a la letra del "Since 1883" del logo */
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-600-italic.woff2") format("woff2"); font-weight: 600; font-style: italic; font-display: swap; }
 @font-face { font-family: "JetBrains Mono"; src: url("/fonts/jetbrains-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 
 @theme {
@@ -25,6 +27,7 @@
   /* --- Fuentes --- */
   --font-sans: "Chivo", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
 
   /* --- Tamaños: pocos y bien distintos --- */
   --text-display: clamp(3rem, 8.6vw, 8.4rem);
@@ -89,6 +92,9 @@
 
   /* Link subrayado (se nota sin depender del color) */
   .subrayado { @apply underline decoration-1 underline-offset-4; }
+
+  /* Palabra resaltada en un título: serif itálica (ej.: "al mundo.") */
+  .resaltada { @apply font-serif text-[1.1em] font-semibold tracking-[-.01em] italic; }
 
   /* Textura de grano sobre los verdes oscuros (componente <Ruido />) */
   .ruido { @apply pointer-events-none absolute inset-0 -z-10 opacity-[.09] mix-blend-overlay; }
