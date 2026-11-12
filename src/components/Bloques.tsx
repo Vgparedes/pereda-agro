@@ -40,8 +40,9 @@ export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pant
 
 /** Llamado al final de cada página. */
 export function Llamado({ titulo = "¿Querés trabajar con nosotros?", texto = "Contanos qué producto, calibre y volumen necesitás y te respondemos a la brevedad." }: { titulo?: string; texto?: string }) {
+  // Menos aire que el resto de las secciones, y menos abajo que arriba: el texto queda más cerca de los girasoles y del pie
   return (
-    <section className="sec-pad relative isolate overflow-hidden" aria-labelledby="llamado-titulo">
+    <section className="relative isolate overflow-hidden pt-[clamp(56px,6vw,96px)] pb-[clamp(40px,4vw,64px)]" aria-labelledby="llamado-titulo">
       {/* Hilera de girasoles en grabado (dibujo propio). Ancho FIJO (391 px en celu, 680 en compu) y pegados abajo a la derecha:
           el pie usa el mismo ancho para las raíces, así los tallos siguen debajo de la tierra sin cortarse. */}
       <div
