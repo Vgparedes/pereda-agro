@@ -10,8 +10,17 @@ export function Empresa() {
       {t.bloques.map((b, i) => {
         const oscuro = i % 2 === 1;
         return (
-          <section key={b.titulo} className={`sec-pad ${oscuro ? "oscuro" : ""}`} aria-labelledby={`bloque-${i}`}>
+          <section key={b.titulo} className={`sec-pad relative isolate overflow-hidden ${oscuro ? "oscuro" : ""}`} aria-labelledby={`bloque-${i}`}>
             {oscuro && <Ruido id={`ruido-bloque-${i}`} />}
+            {/* Número gigante de fondo, del lado del texto, relleno con rayitas como el grabado de los girasoles */}
+            <div
+              aria-hidden="true"
+              className={`numero-rayado pointer-events-none absolute -bottom-[.1em] -z-10 text-[clamp(240px,32vw,500px)] leading-[.8] font-medium tracking-[-.07em] select-none ${
+                oscuro ? "right-[2%] [--raya:rgb(254_204_0/.5)]" : "left-[2%] [--raya:rgb(0_82_33/.42)]"
+              }`}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </div>
             <div className="ancho grid items-center gap-[clamp(32px,6vw,96px)] md:grid-cols-2">
               <div className={oscuro ? "md:order-2" : ""}>
                 <Encabezado etiqueta={`${String(i + 1).padStart(2, "0")} · ${b.etiqueta}`} titulo={b.titulo} bajada={b.texto} id={`bloque-${i}`} />
