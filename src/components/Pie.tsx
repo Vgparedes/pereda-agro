@@ -6,7 +6,7 @@ const texto = "text-[.95rem] leading-relaxed text-white/78";
 
 /** Pie: marca, oficinas, secciones (en dos columnas) y la firma de KRSp chiquita. */
 /** "raices": se muestran solo si arriba está la sección de contacto con los girasoles (no en la página Contacto). */
-export function Pie({ raices = true }: { raices?: boolean }) {
+export function Pie({ raices = false }: { raices?: boolean }) {
   const firma = (
     <>
       Página creada por

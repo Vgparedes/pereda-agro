@@ -42,12 +42,12 @@ export function Cabecera({ etiqueta, titulo, bajada, foto, migas, children, pant
 export function Llamado({ titulo = "¿Querés trabajar con nosotros?", texto = "Contanos qué producto, calibre y volumen necesitás y te respondemos a la brevedad." }: { titulo?: string; texto?: string }) {
   return (
     <section className="sec-pad relative isolate overflow-hidden" aria-labelledby="llamado-titulo">
-      {/* Girasoles de costado en trazo fino. Ancho FIJO (391 px en celu, 680 en compu) y pegados abajo a la derecha:
+      {/* Hilera de girasoles en grabado (dibujo propio). Ancho FIJO (391 px en celu, 680 en compu) y pegados abajo a la derecha:
           el pie usa el mismo ancho para las raíces, así los tallos siguen debajo de la tierra sin cortarse. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-no-repeat [background-position:right_bottom] [background-size:391px_auto] md:[background-size:680px_auto]"
-        style={{ backgroundImage: `url(${archivo("img/girasoles-linea.svg")})` }}
+        style={{ backgroundImage: `url(${archivo("img/girasoles-grabado.svg")})` }}
       />
       {/* Todo el texto y el botón a la izquierda; el lado derecho queda libre para los girasoles.
           En celu deja abajo el espacio de los girasoles para que no queden detrás del botón. */}
