@@ -98,14 +98,6 @@
   /* Palabra resaltada en un título: serif itálica (ej.: "al mundo.") */
   .resaltada { @apply font-serif text-[1.1em] font-semibold tracking-[-.01em] italic; }
 
-  /* Número de fondo rayado (Empresa): el color de las rayas sale de --raya */
-  .numero-rayado {
-    color: transparent;
-    background: repeating-linear-gradient(-55deg, var(--raya) 0 1.5px, transparent 1.5px 7px);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
-
   /* Textura de grano sobre los verdes oscuros (componente <Ruido />) */
   .ruido { @apply pointer-events-none absolute inset-0 -z-10 opacity-[.09] mix-blend-overlay; }
 }

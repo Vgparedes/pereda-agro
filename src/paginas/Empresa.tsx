@@ -12,15 +12,17 @@ export function Empresa() {
         return (
           <section key={b.titulo} className={`sec-pad relative isolate overflow-hidden ${oscuro ? "oscuro" : ""}`} aria-labelledby={`bloque-${i}`}>
             {oscuro && <Ruido id={`ruido-bloque-${i}`} />}
-            {/* Número gigante de fondo, del lado del texto, relleno con rayitas como el grabado de los girasoles */}
+            {/* Hilera de trigo en trazo fino (public/img/espigas.svg, sale de "Claude outputs/pereda-agro/espigas/espigas.py"),
+                abajo y del lado del texto: alta en el borde de la página y cada vez más baja hacia el centro.
+                El SVG es una máscara: el color sale de la clase (dorado en los verdes, verde en los crema).
+                El alto entra en el aire que queda debajo del párrafo, así nunca queda detrás del texto. */}
             <div
               aria-hidden="true"
-              className={`numero-rayado pointer-events-none absolute -bottom-[.1em] -z-10 text-[clamp(240px,32vw,500px)] leading-[.8] font-medium tracking-[-.07em] select-none ${
-                oscuro ? "right-[2%] [--raya:rgb(254_204_0/.5)]" : "left-[2%] [--raya:rgb(0_82_33/.42)]"
+              className={`pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[clamp(56px,9vw,160px)] xl:h-[min(12vw,180px)] [mask-position:right_bottom] [mask-repeat:no-repeat] [mask-size:auto_100%] ${
+                oscuro ? "bg-dorado/30 md:left-1/2" : "-scale-x-100 bg-verde/45 md:right-1/2"
               }`}
-            >
-              {String(i + 1).padStart(2, "0")}
-            </div>
+              style={{ maskImage: `url(${archivo("img/espigas.svg")})`, WebkitMaskImage: `url(${archivo("img/espigas.svg")})` }}
+            />
             <div className="ancho grid items-center gap-[clamp(32px,6vw,96px)] md:grid-cols-2">
               <div className={oscuro ? "md:order-2" : ""}>
                 <Encabezado etiqueta={`${String(i + 1).padStart(2, "0")} · ${b.etiqueta}`} titulo={b.titulo} bajada={b.texto} id={`bloque-${i}`} />
